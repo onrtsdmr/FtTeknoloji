@@ -12,4 +12,9 @@ class News extends Model
     protected $fillable = [
         'title', 'published_at'
     ];
+
+    public function currencies()
+    {
+        return $this->hasMany(NewsCurrency::class);
+    }
 }

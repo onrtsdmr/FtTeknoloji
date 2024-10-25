@@ -12,4 +12,9 @@ class NewsCurrency extends Model
     protected $fillable = [
         'news_id', 'currency_code', 'currency_title', 'currency_slug', 'currency_url'
     ];
+
+    public function news()
+    {
+        return $this->belongsTo(News::class);
+    }
 }
