@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'cryptopanic' => [
+        'url' => env('CRYPTOPANIC_API_URL'),
+    ],
+
 ];

@@ -9,6 +9,7 @@ class NewsCurrency extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $fillable = [
         'news_id', 'currency_code', 'currency_title', 'currency_slug', 'currency_url'
     ];
