@@ -25,6 +25,7 @@ class NewsService
                             'published_at' => Carbon::parse($newsItem['published_at'])->format('Y-m-d H:i:s'),
                         ]);
 
+                        $currencies = [];
                         if (!empty($newsItem['currencies'])) {
                             foreach ($newsItem['currencies'] as $currency) {
                                 NewsCurrency::create([
@@ -34,11 +35,32 @@ class NewsService
                                     'currency_slug' => $currency['slug'] ?? '',
                                     'currency_url' => $currency['url'] ?? '',
                                 ]);
+
+                                $currencies[] = [
+                                    'currency_code' => $currency['code'] ?? '',
+                                    'currency_title' => $currency['title'] ?? '',
+                                    'currency_slug' => $currency['slug'] ?? '',
+                                    'currency_url' => $currency['url'] ?? '',
+                                ];
                             }
-                            $savedNews[] = $news;
+                        } else {
+                            $currencies[] = [
+                                'currency_code' => '',
+                                'currency_title' => 'No Currency',
+                                'currency_slug' => '',
+                                'currency_url' => '',
+                            ];
                         }
+
+                        $savedNews[] = [
+                            'id' => $news->id,
+                            'title' => $news->title,
+                            'published_at' => $news->published_at,
+                            'currencies' => $currencies,
+                        ];
                     });
                 }
+
                 $lastSaved = Redis::get('newsDataLastSave');
                 if (!$lastSaved || Carbon::parse($lastSaved)->diffInMinutes(now()) >= 60) {
                     Redis::set('newsData', json_encode($savedNews));

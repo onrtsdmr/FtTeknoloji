@@ -9,6 +9,4 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-Artisan::command('schedule:jobs', function (Schedule $schedule) {
-    Schedule::job(new FetchNewsJob())->everyMinute();
-});
+Schedule::job(new FetchNewsJob())->everyMinute();
